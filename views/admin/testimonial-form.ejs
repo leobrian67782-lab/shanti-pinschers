@@ -1,0 +1,33 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Add Testimonial</h1>
+  <a href="/admin/testimonials" class="btn btn-outline">&larr; Back to Testimonials</a>
+</div>
+
+<div class="admin-card">
+  <form method="POST" enctype="multipart/form-data" action="/admin/testimonials">
+    <div class="field-row">
+      <div class="field"><label>Name</label><input type="text" name="name" required /></div>
+      <div class="field"><label>Location (optional)</label><input type="text" name="location" /></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Puppy's Name (optional)</label><input type="text" name="puppyName" /></div>
+      <div class="field">
+        <label>Rating</label>
+        <select name="rating">
+          <option value="5">5</option><option value="4">4</option><option value="3">3</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Photo (optional)</label><input type="file" name="photo" accept="image/*" /></div>
+    <div class="field"><label>Message</label><textarea name="message" required></textarea></div>
+    <div class="field checkbox-row">
+      <input type="checkbox" name="approved" id="approved" checked />
+      <label for="approved" style="margin:0;">Publish immediately</label>
+    </div>
+    <button type="submit" class="btn">Save Testimonial</button>
+  </form>
+</div>
+
+<%- include('partials-bottom') %>

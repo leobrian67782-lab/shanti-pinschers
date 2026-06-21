@@ -1,0 +1,36 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1><%= post ? 'Edit Post' : 'New Post' %></h1>
+  <a href="/admin/blog" class="btn btn-outline">&larr; Back to Blog</a>
+</div>
+
+<div class="admin-card">
+  <form method="POST" enctype="multipart/form-data" action="<%= post ? '/admin/blog/' + post._id + '?_method=PUT' : '/admin/blog' %>">
+
+    <% if (post && post.coverImage && post.coverImage.url) { %>
+      <label style="font-size:13px; font-weight:600;">Current Cover Image</label>
+      <div class="existing-photos"><div class="photo-wrap"><img src="<%= post.coverImage.url %>" alt="" /></div></div>
+    <% } %>
+
+    <div class="field"><label>Cover Image</label><input type="file" name="coverImage" accept="image/*" /></div>
+
+    <div class="field"><label>Title</label><input type="text" name="title" value="<%= post ? post.title : '' %>" required /></div>
+
+    <div class="field"><label>Short Excerpt (shown in listings)</label><input type="text" name="excerpt" value="<%= post ? (post.excerpt||'') : '' %>" /></div>
+
+    <div class="field">
+      <label>Content (HTML allowed - e.g. &lt;p&gt;, &lt;h3&gt;, &lt;strong&gt;, &lt;ul&gt;&lt;li&gt;)</label>
+      <textarea name="content" style="min-height:260px;" required><%= post ? post.content : '' %></textarea>
+    </div>
+
+    <div class="field checkbox-row">
+      <input type="checkbox" name="published" id="published" <%= post && post.published ? 'checked' : '' %> />
+      <label for="published" style="margin:0;">Published (visible on site)</label>
+    </div>
+
+    <button type="submit" class="btn"><%= post ? 'Save Changes' : 'Create Post' %></button>
+  </form>
+</div>
+
+<%- include('partials-bottom') %>

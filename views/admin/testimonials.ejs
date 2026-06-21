@@ -1,0 +1,40 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Testimonials</h1>
+  <a href="/admin/testimonials/new" class="btn">+ Add Testimonial</a>
+</div>
+
+<% if (testimonials.length) { %>
+<table class="admin-table">
+  <thead>
+    <tr><th>Name</th><th>Rating</th><th>Message</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% testimonials.forEach(t => { %>
+      <tr>
+        <td><%= t.name %><% if (t.location) { %><br/><span style="color:#999; font-size:12px;"><%= t.location %></span><% } %></td>
+        <td><%= '★'.repeat(t.rating) %></td>
+        <td style="max-width:320px;"><%= t.message.length > 100 ? t.message.slice(0,100) + '…' : t.message %></td>
+        <td><span class="badge <%= t.approved ? 'badge-published' : 'badge-draft' %>"><%= t.approved ? 'Published' : 'Pending Review' %></span></td>
+        <td>
+          <div class="btn-row">
+            <% if (!t.approved) { %>
+              <form method="POST" action="/admin/testimonials/<%= t._id %>/approve?_method=PUT">
+                <button type="submit" class="btn">Approve</button>
+              </form>
+            <% } %>
+            <form method="POST" action="/admin/testimonials/<%= t._id %>?_method=DELETE" data-confirm="Delete this testimonial?">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+  <div class="empty-state">No testimonials yet.</div>
+<% } %>
+
+<%- include('partials-bottom') %>

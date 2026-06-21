@@ -1,0 +1,21 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card"><div class="num"><%= availableCount %></div><div class="label">Puppies Available</div></div>
+  <div class="stat-card"><div class="num"><%= newInquiries %></div><div class="label">New Inquiries</div></div>
+  <div class="stat-card"><div class="num"><%= pendingTestimonials %></div><div class="label">Testimonials to Review</div></div>
+  <div class="stat-card"><div class="num"><%= litterCount %></div><div class="label">Active Litters</div></div>
+</div>
+
+<div class="btn-row">
+  <a href="/admin/puppies/new" class="btn">+ Add Puppy</a>
+  <a href="/admin/litters/new" class="btn btn-outline">+ Add Litter</a>
+  <a href="/admin/blog/new" class="btn btn-outline">+ Write Post</a>
+  <a href="/admin/inquiries" class="btn btn-outline">View Inquiries</a>
+</div>
+
+<%- include('partials-bottom') %>

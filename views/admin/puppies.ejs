@@ -1,0 +1,38 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Manage Puppies</h1>
+  <a href="/admin/puppies/new" class="btn">+ Add Puppy</a>
+</div>
+
+<% if (puppies.length) { %>
+<table class="admin-table">
+  <thead>
+    <tr><th>Photo</th><th>Ledger No.</th><th>Name</th><th>Sex / Color</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% puppies.forEach(p => { %>
+      <tr>
+        <td><% if (p.photos.length) { %><img class="thumb" src="<%= p.photos[0].url %>" alt="" /><% } %></td>
+        <td><%= p.ledgerNo %></td>
+        <td><%= p.name %></td>
+        <td><%= p.sex %> · <%= p.color %></td>
+        <td><%= p.price ? p.price.toLocaleString() + ' XAF' : '—' %></td>
+        <td><span class="badge badge-<%= p.status %>"><%= p.status %></span></td>
+        <td>
+          <div class="btn-row">
+            <a href="/admin/puppies/<%= p._id %>/edit" class="btn btn-outline">Edit</a>
+            <form method="POST" action="/admin/puppies/<%= p._id %>?_method=DELETE" data-confirm="Delete this puppy listing? This cannot be undone.">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+  <div class="empty-state">No puppies added yet. <a href="/admin/puppies/new">Add your first puppy</a>.</div>
+<% } %>
+
+<%- include('partials-bottom') %>

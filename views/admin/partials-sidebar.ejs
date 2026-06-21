@@ -1,0 +1,13 @@
+<aside class="admin-sidebar">
+  <div class="brand">Shanti Bryan <span style="color:#B08628;">Admin</span></div>
+  <a href="/admin" class="<%= title === 'Dashboard' ? 'active' : '' %>">Dashboard</a>
+  <a href="/admin/puppies" class="<%= title.includes('Puppy') || title.includes('Puppies') ? 'active' : '' %>">Puppies</a>
+  <a href="/admin/litters" class="<%= title.includes('Litter') ? 'active' : '' %>">Litters</a>
+  <a href="/admin/inquiries" class="<%= title === 'Inquiries' ? 'active' : '' %>">Inquiries</a>
+  <a href="/admin/testimonials" class="<%= title === 'Testimonials' ? 'active' : '' %>">Testimonials</a>
+  <a href="/admin/blog" class="<%= title.includes('Post') || title === 'Blog & Care Guides' ? 'active' : '' %>">Blog & Care Guides</a>
+  <a href="/" target="_blank">View Live Site &#8599;</a>
+  <form method="POST" action="/admin/logout">
+    <button type="submit">Log Out</button>
+  </form>
+</aside>

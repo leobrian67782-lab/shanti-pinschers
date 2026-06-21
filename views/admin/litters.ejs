@@ -1,0 +1,37 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Manage Litters</h1>
+  <a href="/admin/litters/new" class="btn">+ Add Litter</a>
+</div>
+
+<% if (litters.length) { %>
+<table class="admin-table">
+  <thead>
+    <tr><th>Photo</th><th>Ledger No.</th><th>Title</th><th>Sire / Dam</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% litters.forEach(l => { %>
+      <tr>
+        <td><% if (l.photos.length) { %><img class="thumb" src="<%= l.photos[0].url %>" alt="" /><% } %></td>
+        <td><%= l.ledgerNo %></td>
+        <td><%= l.title %></td>
+        <td><%= l.sireName %> &times; <%= l.damName %></td>
+        <td><span class="badge badge-available" style="text-transform:capitalize;"><%= l.status %></span></td>
+        <td>
+          <div class="btn-row">
+            <a href="/admin/litters/<%= l._id %>/edit" class="btn btn-outline">Edit</a>
+            <form method="POST" action="/admin/litters/<%= l._id %>?_method=DELETE" data-confirm="Delete this litter? This cannot be undone.">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+  <div class="empty-state">No litters added yet. <a href="/admin/litters/new">Add your first litter</a>.</div>
+<% } %>
+
+<%- include('partials-bottom') %>

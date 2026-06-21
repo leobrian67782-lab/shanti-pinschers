@@ -1,0 +1,49 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1><%= litter ? 'Edit Litter' : 'Add Litter' %></h1>
+  <a href="/admin/litters" class="btn btn-outline">&larr; Back to Litters</a>
+</div>
+
+<div class="admin-card">
+  <form method="POST" enctype="multipart/form-data" action="<%= litter ? '/admin/litters/' + litter._id + '?_method=PUT' : '/admin/litters' %>">
+
+    <% if (litter && litter.photos && litter.photos.length) { %>
+      <label style="font-size:13px; font-weight:600;">Current Photos</label>
+      <div class="existing-photos">
+        <% litter.photos.forEach(photo => { %>
+          <div class="photo-wrap"><img src="<%= photo.url %>" alt="" /></div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <div class="field"><label>Photos</label><input type="file" name="photos" accept="image/*" multiple /></div>
+
+    <div class="field"><label>Litter Title</label><input type="text" name="title" placeholder="e.g. Onyx x Bella" value="<%= litter ? litter.title : '' %>" required /></div>
+
+    <div class="field-row">
+      <div class="field"><label>Sire's Name</label><input type="text" name="sireName" value="<%= litter ? litter.sireName : '' %>" required /></div>
+      <div class="field"><label>Dam's Name</label><input type="text" name="damName" value="<%= litter ? litter.damName : '' %>" required /></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Date of Birth (if born)</label><input type="date" name="dob" value="<%= litter && litter.dob ? litter.dob.toISOString().split('T')[0] : '' %>" /></div>
+      <div class="field"><label>Expected Date (if not yet born)</label><input type="date" name="expectedDate" value="<%= litter && litter.expectedDate ? litter.expectedDate.toISOString().split('T')[0] : '' %>" /></div>
+    </div>
+
+    <div class="field">
+      <label>Status</label>
+      <select name="status">
+        <% ['expected','born','weaning','sold-out','archived'].forEach(s => { %>
+          <option value="<%= s %>" <%= litter && litter.status === s ? 'selected' : '' %>><%= s %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="field"><label>Description</label><textarea name="description"><%= litter ? (litter.description||'') : '' %></textarea></div>
+
+    <button type="submit" class="btn"><%= litter ? 'Save Changes' : 'Add Litter' %></button>
+  </form>
+</div>
+
+<%- include('partials-bottom') %>

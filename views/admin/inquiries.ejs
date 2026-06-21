@@ -1,0 +1,56 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Inquiries</h1>
+</div>
+
+<div class="filter-tabs">
+  <a href="/admin/inquiries" class="<%= activeFilter === 'all' ? 'active' : '' %>">All</a>
+  <a href="/admin/inquiries?status=new" class="<%= activeFilter === 'new' ? 'active' : '' %>">New</a>
+  <a href="/admin/inquiries?status=read" class="<%= activeFilter === 'read' ? 'active' : '' %>">Read</a>
+  <a href="/admin/inquiries?status=replied" class="<%= activeFilter === 'replied' ? 'active' : '' %>">Replied</a>
+  <a href="/admin/inquiries?status=archived" class="<%= activeFilter === 'archived' ? 'active' : '' %>">Archived</a>
+</div>
+
+<% if (inquiries.length) { %>
+<table class="admin-table">
+  <thead>
+    <tr><th>Date</th><th>Name</th><th>Contact</th><th>Regarding</th><th>Message</th><th>Status</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% inquiries.forEach(inq => { %>
+      <tr>
+        <td><%= new Date(inq.createdAt).toLocaleDateString() %></td>
+        <td><%= inq.name %></td>
+        <td><a href="mailto:<%= inq.email %>"><%= inq.email %></a><% if (inq.phone) { %><br/><%= inq.phone %><% } %></td>
+        <td><%= inq.puppyName || '—' %></td>
+        <td style="max-width:260px;"><%= inq.message.length > 90 ? inq.message.slice(0,90) + '…' : inq.message %></td>
+        <td><span class="badge badge-<%= inq.status === 'new' ? 'new' : 'draft' %>"><%= inq.status %></span></td>
+        <td>
+          <div class="btn-row">
+            <% if (inq.status === 'new') { %>
+              <form method="POST" action="/admin/inquiries/<%= inq._id %>/status?_method=PUT">
+                <input type="hidden" name="status" value="read" />
+                <button type="submit" class="btn btn-outline">Mark Read</button>
+              </form>
+            <% } %>
+            <% if (inq.status !== 'replied') { %>
+              <form method="POST" action="/admin/inquiries/<%= inq._id %>/status?_method=PUT">
+                <input type="hidden" name="status" value="replied" />
+                <button type="submit" class="btn btn-outline">Mark Replied</button>
+              </form>
+            <% } %>
+            <form method="POST" action="/admin/inquiries/<%= inq._id %>?_method=DELETE" data-confirm="Delete this inquiry?">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+  <div class="empty-state">No inquiries here yet.</div>
+<% } %>
+
+<%- include('partials-bottom') %>

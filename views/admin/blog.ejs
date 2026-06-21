@@ -1,0 +1,36 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1>Blog & Care Guides</h1>
+  <a href="/admin/blog/new" class="btn">+ Write Post</a>
+</div>
+
+<% if (posts.length) { %>
+<table class="admin-table">
+  <thead>
+    <tr><th>Cover</th><th>Title</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% posts.forEach(p => { %>
+      <tr>
+        <td><% if (p.coverImage && p.coverImage.url) { %><img class="thumb" src="<%= p.coverImage.url %>" alt="" /><% } %></td>
+        <td><%= p.title %></td>
+        <td><span class="badge <%= p.published ? 'badge-published' : 'badge-draft' %>"><%= p.published ? 'Published' : 'Draft' %></span></td>
+        <td><%= new Date(p.createdAt).toLocaleDateString() %></td>
+        <td>
+          <div class="btn-row">
+            <a href="/admin/blog/<%= p._id %>/edit" class="btn btn-outline">Edit</a>
+            <form method="POST" action="/admin/blog/<%= p._id %>?_method=DELETE" data-confirm="Delete this post?">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+  <div class="empty-state">No posts yet. <a href="/admin/blog/new">Write your first post</a>.</div>
+<% } %>
+
+<%- include('partials-bottom') %>

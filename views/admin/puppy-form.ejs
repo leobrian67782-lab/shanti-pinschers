@@ -1,0 +1,93 @@
+<%- include('partials-top') %>
+
+<div class="admin-topline">
+  <h1><%= puppy ? 'Edit Puppy' : 'Add Puppy' %></h1>
+  <a href="/admin/puppies" class="btn btn-outline">&larr; Back to Puppies</a>
+</div>
+
+<div class="admin-card">
+  <form method="POST" enctype="multipart/form-data" action="<%= puppy ? '/admin/puppies/' + puppy._id + '?_method=PUT' : '/admin/puppies' %>">
+
+    <% if (puppy && puppy.photos && puppy.photos.length) { %>
+      <label style="font-size:13px; font-weight:600;">Current Photos</label>
+      <div class="existing-photos">
+        <% puppy.photos.forEach(photo => { %>
+          <div class="photo-wrap">
+            <img src="<%= photo.url %>" alt="" />
+            <form method="POST" action="/admin/puppies/<%= puppy._id %>/photos/<%= photo._id %>?_method=DELETE" data-confirm="Remove this photo?">
+              <button type="submit" title="Remove photo">&times;</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <div class="field">
+      <label>Photos (you can add more anytime)</label>
+      <input type="file" name="photos" accept="image/*" multiple />
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Puppy Name</label><input type="text" name="name" value="<%= puppy ? puppy.name : '' %>" required /></div>
+      <div class="field">
+        <label>Sex</label>
+        <select name="sex" required>
+          <option value="Male" <%= puppy && puppy.sex === 'Male' ? 'selected' : '' %>>Male</option>
+          <option value="Female" <%= puppy && puppy.sex === 'Female' ? 'selected' : '' %>>Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Color</label>
+        <select name="color" required>
+          <% ['Red','Black & Rust','Chocolate & Rust','Black & Tan','Fawn'].forEach(c => { %>
+            <option value="<%= c %>" <%= puppy && puppy.color === c ? 'selected' : '' %>><%= c %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="field"><label>Date of Birth</label><input type="date" name="dob" value="<%= puppy && puppy.dob ? puppy.dob.toISOString().split('T')[0] : '' %>" required /></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Sire's Name</label><input type="text" name="sireName" value="<%= puppy ? (puppy.sireName||'') : '' %>" /></div>
+      <div class="field"><label>Dam's Name</label><input type="text" name="damName" value="<%= puppy ? (puppy.damName||'') : '' %>" /></div>
+    </div>
+
+    <div class="field">
+      <label>Litter (optional)</label>
+      <select name="litter">
+        <option value="">— Not linked to a litter —</option>
+        <% litters.forEach(l => { %>
+          <option value="<%= l._id %>" <%= puppy && puppy.litter && puppy.litter.toString() === l._id.toString() ? 'selected' : '' %>><%= l.title %> (<%= l.ledgerNo %>)</option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Price (XAF)</label><input type="number" name="price" value="<%= puppy && puppy.price ? puppy.price : '' %>" /></div>
+      <div class="field">
+        <label>Status</label>
+        <select name="status">
+          <option value="available" <%= puppy && puppy.status === 'available' ? 'selected' : '' %>>Available</option>
+          <option value="reserved" <%= puppy && puppy.status === 'reserved' ? 'selected' : '' %>>Reserved</option>
+          <option value="sold" <%= puppy && puppy.status === 'sold' ? 'selected' : '' %>>Sold</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field"><label>Price Note (optional)</label><input type="text" name="priceNote" placeholder="e.g. Deposit secures puppy" value="<%= puppy ? (puppy.priceNote||'') : '' %>" /></div>
+
+    <div class="field"><label>Description</label><textarea name="description"><%= puppy ? (puppy.description||'') : '' %></textarea></div>
+
+    <div class="field checkbox-row">
+      <input type="checkbox" name="featured" id="featured" <%= puppy && puppy.featured ? 'checked' : '' %> />
+      <label for="featured" style="margin:0;">Feature on homepage</label>
+    </div>
+
+    <button type="submit" class="btn"><%= puppy ? 'Save Changes' : 'Add Puppy' %></button>
+  </form>
+</div>
+
+<%- include('partials-bottom') %>
