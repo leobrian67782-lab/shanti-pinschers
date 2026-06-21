@@ -1,0 +1,124 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-mast">
+        <span class="eyebrow">Est. Kennel &middot; Bamenda, Cameroon</span>
+        <h1>Miniature Pinschers, bred with record and rigor.</h1>
+      </div>
+      <p class="lede">
+        Shanti Bryan Pinschers is a small home-based kennel. Every litter is documented from
+        whelping to placement &mdash; health checks, lineage, and a written record for the family
+        who takes each puppy home.
+      </p>
+      <div class="hero-actions">
+        <a href="/available-puppies" class="btn btn-primary">View Available Puppies</a>
+        <a href="/about" class="btn btn-secondary">About Our Kennel</a>
+      </div>
+    </div>
+    <div class="hero-photo-frame">
+      <% if (featured.length && featured[0].photos.length) { %>
+        <img src="<%= featured[0].photos[0].url %>" alt="Miniature Pinscher puppy" />
+      <% } else { %>
+        <div style="aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; color:#999; background:#eee;">Photos coming soon</div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<hr class="rule-thick" />
+
+<section class="section container">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Currently Available</span>
+      <h2>Puppies Ready for Their Homes</h2>
+    </div>
+    <a href="/available-puppies">View all &rarr;</a>
+  </div>
+
+  <% if (featured.length) { %>
+    <div class="ledger-grid">
+      <% featured.forEach(puppy => { %>
+        <%- include('partials/puppy-card', { puppy }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty-state">No puppies listed right now &mdash; check back soon, or <a href="/contact">contact us</a> to ask about upcoming litters.</div>
+  <% } %>
+</section>
+
+<% if (litters.length) { %>
+<section class="section container" style="background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">In the Nursery</span>
+      <h2>Upcoming & Recent Litters</h2>
+    </div>
+    <a href="/litters">View all &rarr;</a>
+  </div>
+  <div class="ledger-grid">
+    <% litters.forEach(litter => { %>
+      <a href="/litters" class="ledger-card" style="text-decoration:none; color:inherit;">
+        <div class="ledger-card-photo">
+          <% if (litter.photos && litter.photos.length) { %>
+            <img src="<%= litter.photos[0].url %>" alt="<%= litter.title %>" loading="lazy" />
+          <% } else { %>
+            <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#999; font-size:13px;">No photo yet</div>
+          <% } %>
+          <span class="ledger-no"><%= litter.ledgerNo %></span>
+        </div>
+        <div class="ledger-card-body">
+          <h3><%= litter.title %></h3>
+          <div class="ledger-meta">Status: <%= litter.status %></div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+
+<section class="section container">
+  <div class="split">
+    <div>
+      <span class="eyebrow">Our Standard</span>
+      <h2>Raised in-home. Documented in full.</h2>
+      <p style="color:var(--muted); margin-top:14px;">
+        Parents are health-screened before breeding. Puppies are whelped and weaned indoors,
+        wormed and vaccinated on schedule, and sent home with a written record of lineage,
+        health, and care &mdash; the same standard we'd want as buyers ourselves.
+      </p>
+      <a href="/about" class="btn btn-secondary" style="margin-top:18px;">Read About Our Kennel</a>
+    </div>
+    <div class="hero-photo-frame">
+      <div style="aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; color:var(--muted); background:var(--parchment-dark); font-size:13px;">
+        Kennel photo
+      </div>
+    </div>
+  </div>
+</section>
+
+<% if (testimonials.length) { %>
+<section class="section container" style="background:var(--card); border-top:1px solid var(--line);">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">From Our Families</span>
+      <h2>What Buyers Say</h2>
+    </div>
+    <a href="/testimonials">View all &rarr;</a>
+  </div>
+  <div class="ledger-grid">
+    <% testimonials.forEach(t => { %>
+      <div class="testimonial-card">
+        <div class="testimonial-stars"><%= '★'.repeat(t.rating) %></div>
+        <p>&ldquo;<%= t.message %>&rdquo;</p>
+        <div class="testimonial-name"><%= t.name %></div>
+        <div class="testimonial-loc"><%= t.location || '' %></div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

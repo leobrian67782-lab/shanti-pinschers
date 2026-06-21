@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<section class="section container">
+  <span class="eyebrow">The Registry</span>
+  <h1>Available Puppies</h1>
+  <p style="color:var(--muted); max-width:560px;">Every entry below carries its own ledger number and full record. Tap a card for pedigree, pricing, and health details.</p>
+
+  <form class="filter-bar" method="GET" action="/available-puppies">
+    <select name="sex" class="auto-submit">
+      <option value="">Any Sex</option>
+      <option value="Male" <%= query.sex === 'Male' ? 'selected' : '' %>>Male</option>
+      <option value="Female" <%= query.sex === 'Female' ? 'selected' : '' %>>Female</option>
+    </select>
+    <select name="color" class="auto-submit">
+      <option value="">Any Color</option>
+      <% ['Red','Black & Rust','Chocolate & Rust','Black & Tan','Fawn'].forEach(c => { %>
+        <option value="<%= c %>" <%= query.color === c ? 'selected' : '' %>><%= c %></option>
+      <% }) %>
+    </select>
+    <select name="status" class="auto-submit">
+      <option value="">Available & Reserved</option>
+      <option value="available" <%= query.status === 'available' ? 'selected' : '' %>>Available Only</option>
+      <option value="sold" <%= query.status === 'sold' ? 'selected' : '' %>>Recently Placed</option>
+    </select>
+    <% if (query.sex || query.color || query.status) { %>
+      <a href="/available-puppies" class="btn btn-secondary btn-sm">Clear</a>
+    <% } %>
+  </form>
+
+  <% if (puppies.length) { %>
+    <div class="ledger-grid">
+      <% puppies.forEach(puppy => { %>
+        <%- include('partials/puppy-card', { puppy }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty-state">No puppies match those filters right now. <a href="/contact">Contact us</a> about upcoming litters.</div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

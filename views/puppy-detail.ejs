@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<section class="section container">
+  <p style="margin-bottom:18px;"><a href="/available-puppies">&larr; Back to Available Puppies</a></p>
+
+  <div class="detail-grid">
+    <div>
+      <div class="detail-gallery-main">
+        <% if (puppy.photos && puppy.photos.length) { %>
+          <img src="<%= puppy.photos[0].url %>" alt="<%= puppy.name %>" />
+        <% } else { %>
+          <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#999;">No photo yet</div>
+        <% } %>
+      </div>
+      <% if (puppy.photos && puppy.photos.length > 1) { %>
+        <div class="detail-thumbs">
+          <% puppy.photos.forEach(p => { %>
+            <img src="<%= p.url %>" alt="" />
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div>
+      <span class="ledger-no" style="position:static; display:inline-block; margin-bottom:10px;"><%= puppy.ledgerNo %></span>
+      <span class="seal seal-<%= puppy.status %>" style="position:static; display:inline-flex; margin-left:8px; vertical-align:top;"><%= puppy.status %></span>
+      <h1 style="margin-top:14px;"><%= puppy.name %></h1>
+
+      <table class="spec-table">
+        <tr><td>Sex</td><td><%= puppy.sex %></td></tr>
+        <tr><td>Color</td><td><%= puppy.color %></td></tr>
+        <tr><td>Date of Birth</td><td><%= puppy.dob ? new Date(puppy.dob).toLocaleDateString() : '—' %></td></tr>
+        <% if (puppy.sireName) { %><tr><td>Sire</td><td><%= puppy.sireName %></td></tr><% } %>
+        <% if (puppy.damName) { %><tr><td>Dam</td><td><%= puppy.damName %></td></tr><% } %>
+        <% if (puppy.litter) { %><tr><td>Litter</td><td><%= puppy.litter.title %> (<%= puppy.litter.ledgerNo %>)</td></tr><% } %>
+        <tr><td>Price</td><td><%= puppy.price ? puppy.price.toLocaleString() + ' XAF' : 'On request' %></td></tr>
+      </table>
+
+      <% if (puppy.priceNote) { %><p style="font-size:13px; color:var(--muted);"><%= puppy.priceNote %></p><% } %>
+
+      <% if (puppy.description) { %>
+        <p style="margin-top:16px;"><%= puppy.description %></p>
+      <% } %>
+
+      <% if (puppy.status !== 'sold') { %>
+        <a href="/contact?puppy=<%= puppy._id %>" class="btn btn-primary" style="margin-top:20px;">Inquire About <%= puppy.name %></a>
+      <% } else { %>
+        <p style="margin-top:20px; color:var(--muted);">This puppy has found a home. <a href="/available-puppies">See who's still available &rarr;</a></p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

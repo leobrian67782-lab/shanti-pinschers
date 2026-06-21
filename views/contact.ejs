@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<section class="section container">
+  <span class="eyebrow">Get in Touch</span>
+  <h1>Contact Us</h1>
+  <p style="color:var(--muted); max-width:520px; margin-bottom:24px;">
+    Have a question about an available puppy, an upcoming litter, or anything else? Send us a message and we'll reply by email.
+  </p>
+
+  <div class="form-card">
+    <% if (success) { %>
+      <div class="alert alert-success">Thank you &mdash; your message has been sent. We'll reply by email soon.</div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/contact">
+      <% if (puppyId) { %>
+        <input type="hidden" name="puppy" value="<%= puppyId %>" />
+        <input type="hidden" name="puppyName" value="<%= puppyName %>" />
+        <div class="alert" style="background:#F0ECE2; border:1px solid var(--line);">Asking about: <strong><%= puppyName %></strong></div>
+      <% } %>
+      <div class="field"><label>Full Name</label><input type="text" name="name" required /></div>
+      <div class="field-row">
+        <div class="field"><label>Email</label><input type="email" name="email" required /></div>
+        <div class="field"><label>Phone (optional)</label><input type="tel" name="phone" /></div>
+      </div>
+      <div class="field"><label>Message</label><textarea name="message" required placeholder="Tell us a bit about what you're looking for..."></textarea></div>
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section class="section container" style="max-width:760px;">
+  <p style="margin-bottom:14px;"><a href="/blog">&larr; Back to Care Guides</a></p>
+  <div class="blog-date"><%= new Date(post.publishedAt || post.createdAt).toLocaleDateString() %></div>
+  <h1 style="margin-top:8px;"><%= post.title %></h1>
+
+  <% if (post.coverImage && post.coverImage.url) { %>
+    <div class="hero-photo-frame" style="margin:20px 0;">
+      <img src="<%= post.coverImage.url %>" alt="<%= post.title %>" />
+    </div>
+  <% } %>
+
+  <div style="font-size:16px; line-height:1.75;">
+    <%- post.content %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

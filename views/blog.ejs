@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<section class="section container">
+  <span class="eyebrow">Care Guides & News</span>
+  <h1>From the Kennel</h1>
+
+  <% if (posts.length) { %>
+    <div class="ledger-grid">
+      <% posts.forEach(post => { %>
+        <a href="/blog/<%= post.slug %>" class="blog-card" style="text-decoration:none; color:inherit;">
+          <% if (post.coverImage && post.coverImage.url) { %>
+            <img src="<%= post.coverImage.url %>" alt="<%= post.title %>" loading="lazy" />
+          <% } %>
+          <div class="blog-card-body">
+            <div class="blog-date"><%= new Date(post.publishedAt || post.createdAt).toLocaleDateString() %></div>
+            <h3 style="margin-top:6px; font-size:18px;"><%= post.title %></h3>
+            <% if (post.excerpt) { %><p style="font-size:14px; color:var(--muted);"><%= post.excerpt %></p><% } %>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="empty-state">No articles published yet &mdash; check back soon.</div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>
