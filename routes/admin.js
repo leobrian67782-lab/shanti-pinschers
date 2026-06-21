@@ -19,6 +19,26 @@ const uploadBlog = makeUploader('blog');
 
 /* ---------- AUTH ---------- */
 
+// One-time setup route - creates the admin account if none exists yet.
+// Safe to leave in: it does nothing once an admin already exists.
+router.get('/setup-once', async (req, res) => {
+  try {
+    const existingCount = await Admin.countDocuments();
+    if (existingCount > 0) {
+      return res.send('An admin account already exists. Go to /admin/login to sign in.');
+    }
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+    if (!email || !password) {
+      return res.send('ADMIN_EMAIL or ADMIN_PASSWORD is not set in your environment variables yet.');
+    }
+    await Admin.create({ name: 'Bryan', email: email.toLowerCase().trim(), password });
+    res.send(`Admin account created for ${email}. You can now log in at /admin/login.`);
+  } catch (err) {
+    res.status(500).send('Setup error: ' + err.message);
+  }
+});
+
 router.get('/login', (req, res) => {
   if (req.session.adminId) return res.redirect('/admin');
   res.render('admin/login', { title: 'Admin Login', error: null });
