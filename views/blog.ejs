@@ -5,7 +5,7 @@
   <h1>From the Kennel</h1>
 
   <% if (posts.length) { %>
-    <div class="ledger-grid">
+    <div class="ledger-grid reveal-group">
       <% posts.forEach(post => { %>
         <a href="/blog/<%= post.slug %>" class="blog-card" style="text-decoration:none; color:inherit;">
           <% if (post.coverImage && post.coverImage.url) { %>

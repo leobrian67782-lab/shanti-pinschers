@@ -28,7 +28,7 @@
   </form>
 
   <% if (puppies.length) { %>
-    <div class="ledger-grid">
+    <div class="ledger-grid reveal-group">
       <% puppies.forEach(puppy => { %>
         <%- include('partials/puppy-card', { puppy }) %>
       <% }) %>
