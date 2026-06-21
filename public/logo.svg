@@ -1,0 +1,13 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Shanti Bryan Pinschers crest">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#B08628" stroke-width="2"/>
+  <circle cx="32" cy="32" r="25" fill="none" stroke="#B08628" stroke-width="0.75" opacity="0.6"/>
+  <g fill="#F3EEE2">
+    <!-- body -->
+    <path d="M20 41c0-7 4-11 8-12l1-6c0-2 1-3 3-3s3 1 3 3v2c3 1 6 4 7 9l1 7c0 2-1 3-3 3H23c-2 0-3-1-3-3z"/>
+    <!-- ear -->
+    <path d="M28 21l-3-7c-0.5-1.2 0.6-2.3 1.8-1.8l6.2 2.8z"/>
+    <!-- tail -->
+    <path d="M41 38c3-1 5-3 5-6 0-1.5-1.5-2-2.3-0.8-1 1.5-1.7 3.4-2.7 4.8z"/>
+  </g>
+  <circle cx="30" cy="27" r="1.3" fill="#2A211B"/>
+</svg>
