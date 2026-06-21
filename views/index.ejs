@@ -30,7 +30,7 @@
 <hr class="rule-thick" />
 
 <section class="section container">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div>
       <span class="eyebrow">Currently Available</span>
       <h2>Puppies Ready for Their Homes</h2>
@@ -39,7 +39,7 @@
   </div>
 
   <% if (featured.length) { %>
-    <div class="ledger-grid">
+    <div class="ledger-grid reveal-group">
       <% featured.forEach(puppy => { %>
         <%- include('partials/puppy-card', { puppy }) %>
       <% }) %>
@@ -51,14 +51,14 @@
 
 <% if (litters.length) { %>
 <section class="section container" style="background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div>
       <span class="eyebrow">In the Nursery</span>
       <h2>Upcoming & Recent Litters</h2>
     </div>
     <a href="/litters">View all &rarr;</a>
   </div>
-  <div class="ledger-grid">
+  <div class="ledger-grid reveal-group">
     <% litters.forEach(litter => { %>
       <a href="/litters" class="ledger-card" style="text-decoration:none; color:inherit;">
         <div class="ledger-card-photo">
@@ -80,7 +80,7 @@
 <% } %>
 
 <section class="section container">
-  <div class="split">
+  <div class="split reveal">
     <div>
       <span class="eyebrow">Our Standard</span>
       <h2>Raised in-home. Documented in full.</h2>
@@ -101,14 +101,14 @@
 
 <% if (testimonials.length) { %>
 <section class="section container" style="background:var(--card); border-top:1px solid var(--line);">
-  <div class="section-head">
+  <div class="section-head reveal">
     <div>
       <span class="eyebrow">From Our Families</span>
       <h2>What Buyers Say</h2>
     </div>
     <a href="/testimonials">View all &rarr;</a>
   </div>
-  <div class="ledger-grid">
+  <div class="ledger-grid reveal-group">
     <% testimonials.forEach(t => { %>
       <div class="testimonial-card">
         <div class="testimonial-stars"><%= '★'.repeat(t.rating) %></div>
