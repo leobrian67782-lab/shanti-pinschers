@@ -1,1 +1,22 @@
-
+<a href="/puppies/<%= puppy._id %>" class="ledger-card" style="text-decoration:none; color:inherit;">
+  <div class="ledger-card-photo">
+    <% if (puppy.photos && puppy.photos.length) { %>
+      <img src="<%= puppy.photos[0].url %>" alt="<%= puppy.name %>" loading="lazy" />
+    <% } else { %>
+      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#999; font-size:13px;">No photo yet</div>
+    <% } %>
+    <span class="ledger-no"><%= puppy.ledgerNo %></span>
+    <span class="seal seal-<%= puppy.status %>"><%= puppy.status %></span>
+  </div>
+  <div class="ledger-card-body">
+    <h3><%= puppy.name %></h3>
+    <div class="ledger-meta"><%= puppy.sex %> &middot; <%= puppy.color %></div>
+    <div class="ledger-price">
+      <% if (puppy.price) { %>
+        <%= puppy.price.toLocaleString() %> XAF
+      <% } else { %>
+        Price on request
+      <% } %>
+    </div>
+  </div>
+</a>
